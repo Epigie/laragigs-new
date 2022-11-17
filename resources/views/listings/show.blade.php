@@ -4,7 +4,9 @@
 	<div class="mx-4">
 		<x-card class="p-10">
 			<div class="flex flex-col items-center justify-center text-center">
-				<img class="w-48 mr-6 mb-6" src="{{ asset('images/no-image.png') }}" alt="" />
+				<img class="w-48 mr-6 mb-6"
+					src="{{$listing->logo ? asset('storage/'.$listing->logo):asset('/images/no-image.png')}}"
+					alt="{{$listing->company}}" />
 
 				<h3 class="text-2xl mb-2">{{ $listing->title }}</h3>
 				<div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
@@ -22,14 +24,29 @@
 							{{ $listing->description }}
 						</p>
 
-						<a href="mailto:{{ $listing->email }}" class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"><i class="fa-solid fa-envelope"></i>
+						<a href="mailto:{{ $listing->email }}"
+							class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"><i
+								class="fa-solid fa-envelope"></i>
 							Contact Employer</a>
 
-						<a href="{{ $listing->website }}" target="_blank" class="block bg-black text-white py-2 rounded-xl hover:opacity-80"><i class="fa-solid fa-globe"></i> Visit
+						<a href="{{ $listing->website }}" target="_blank"
+							class="block bg-black text-white py-2 rounded-xl hover:opacity-80"><i class="fa-solid fa-globe"></i> Visit
 							Website</a>
 					</div>
 				</div>
 			</div>
+		</x-card>
+
+		<x-card class="m-4 p-2 flex space-x-6">
+			<a href="/listings/{{$listing->id}}/edit">
+				Edit
+			</a>
+
+			<form method="POST" action="/listings/{{$listing->id}}">
+				@csrf
+				@method('DELETE')
+				<button class="text-red-500">DELETE</button>
+			</form>
 		</x-card>
 	</div>
 </x-layout>
